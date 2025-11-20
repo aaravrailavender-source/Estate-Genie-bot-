@@ -1,22 +1,16 @@
-import logging
-from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, filters
+import os
+from telegram import Update
+from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 
-TOKEN = "8502027930:AAEc4YWFsD6kEKQFztMXl1f4Oqw3F150iTQ"
+TOKEN = os.getenv("BOT_TOKEN")
 
-logging.basicConfig(level=logging.INFO)
-
-async def start(update, context):
-    await update.message.reply_text("👋 Hello! I'm your Real Estate Bot. How can I help you today?")
-
-async def reply(update, context):
-    user_text = update.message.text
-    await update.message.reply_text(f"You said: {user_text}")
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text("🚀 Real Estate Bot is now Active 24/7!")
 
 def main():
     app = ApplicationBuilder().token(TOKEN).build()
 
     app.add_handler(CommandHandler("start", start))
-    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, reply))
 
     app.run_polling()
 
